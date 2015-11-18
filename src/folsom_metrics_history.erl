@@ -42,6 +42,7 @@
 new(Name) ->
     Tid = ets:new(history, ?ETSOPTS),
     ets:insert(?HISTORY_TABLE, {Name, #history{tid=Tid}}),
+    ets:give_away(Tid, whereis(folsom_sup), none),
     ok.
 
 update(Name, Size, Value) ->
